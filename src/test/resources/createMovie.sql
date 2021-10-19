@@ -1,0 +1,1 @@
+INSERT INTO movies (id, Title, Rating, Min_Age, Description, Category_id) VALUES (1,'Godfather',10,16,'a classic...',2);
