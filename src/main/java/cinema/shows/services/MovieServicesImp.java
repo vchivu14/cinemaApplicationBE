@@ -13,7 +13,7 @@ import java.util.*;
 
 @Service
 public class MovieServicesImp implements MovieServices {
-    private MovieRepo movieRepo;
+    private final MovieRepo movieRepo;
     @Autowired
     ActorServices actorServices;
     @Autowired
@@ -28,6 +28,12 @@ public class MovieServicesImp implements MovieServices {
     }
 
     @Override
+    public Movie getMovieById(Integer movieId) {
+        return movieRepo.findById(movieId)
+                .orElseThrow(() -> new ResourceNotFoundException(errorMessage(movieId)));
+    }
+
+    @Override
     public MovieDTOMin getMovieDTOMinFromMovie(Movie movie) {
         MovieDTOMin movieDTOMin = new MovieDTOMin();
         movieDTOMin.setTitle(movie.getTitle());
@@ -39,22 +45,28 @@ public class MovieServicesImp implements MovieServices {
 
     @Override
     public MovieDTOFull getMovieDTOFullFromMovie(Movie movie) {
-       MovieDTOFull movieDTOFull = new MovieDTOFull();
-       movieDTOFull.setId(movie.getId());
-       movieDTOFull.setTitle(movie.getTitle());
-       movieDTOFull.setCategoryId(movie.getCategoryId());
-       String category = categoryRepo.getById(movie.getCategoryId()).getName();
-       movieDTOFull.setCategory(category);
-       movieDTOFull.setMinAge(movie.getMinAge());
-       movieDTOFull.setDescription(movie.getDescription());
-       movieDTOFull.setRating(movie.getRating());
-       if (!movie.getActorSet().isEmpty()) {
+        MovieDTOFull movieDTOFull = new MovieDTOFull();
+        movieDTOFull.setId(movie.getId());
+        movieDTOFull.setTitle(movie.getTitle());
+        movieDTOFull.setCategoryId(movie.getCategoryId());
+        String category = categoryRepo.getById(movie.getCategoryId()).getName();
+        movieDTOFull.setCategory(category);
+        movieDTOFull.setMinAge(movie.getMinAge());
+        movieDTOFull.setDescription(movie.getDescription());
+        movieDTOFull.setRating(movie.getRating());
+        if (!movie.getActorSet().isEmpty()) {
             Set<Actor> actorSet = movie.getActorSet();
             movieDTOFull.setActorList(actorServices.getListOfActorsToShowWithMovieRequest(actorSet));
-       } else {
-           movieDTOFull.setActorList(new ArrayList<>());
-       }
-       return movieDTOFull;
+        } else {
+            movieDTOFull.setActorList(new ArrayList<>());
+        }
+        return movieDTOFull;
+    }
+
+    @Override
+    public MovieDTOFull getMovieDTOFull(Integer movieId) {
+        Movie movie = getMovieById(movieId);
+        return getMovieDTOFullFromMovie(movie);
     }
 
     @Override
@@ -71,22 +83,8 @@ public class MovieServicesImp implements MovieServices {
     }
 
     @Override
-    public MovieDTOFull getMovieDTOFull(Integer movieId) {
-        Movie movie = movieRepo.findById(movieId)
-                .orElseThrow(() -> new ResourceNotFoundException(errorMessage(movieId)));
-        return getMovieDTOFullFromMovie(movie);
-    }
-
-    @Override
-    public Movie getMovieById(Integer movieId) {
-        return movieRepo.findById(movieId)
-                .orElseThrow(() -> new ResourceNotFoundException(errorMessage(movieId)));
-    }
-
-    @Override
     public MovieDTOFull updateMovie(MovieDTOFull movieDTO, Boolean replace) {
-        Movie movieInDB = movieRepo.findById(movieDTO.getId())
-                .orElseThrow(() -> new ResourceNotFoundException(errorMessage(movieDTO.getId())));
+        Movie movieInDB = getMovieById(movieDTO.getId());
         String title = movieDTO.getTitle();
         Double rating = movieDTO.getRating();
         Short minAge = movieDTO.getMinAge();
@@ -109,8 +107,7 @@ public class MovieServicesImp implements MovieServices {
             movieInDB.setCategoryId(categoryId);
         }
         if (actors != null) {
-            List<Actor> actorList = actorServices.saveAll(actors);
-            Set<Actor> actorSet = new HashSet(actorList);
+            Set<Actor> actorSet = actorServices.getSetOfActorsFromListOfActorDTOs(actors);
             if (replace) {
                 movieInDB.setActorSet(actorSet);
             } else {
@@ -123,8 +120,7 @@ public class MovieServicesImp implements MovieServices {
 
     @Override
     public void removeMovie(Integer movieId) {
-        movieRepo.findById(movieId)
-                .orElseThrow(() -> new ResourceNotFoundException(errorMessage(movieId)));
+        getMovieById(movieId);
         movieRepo.deleteById(movieId);
     }
 

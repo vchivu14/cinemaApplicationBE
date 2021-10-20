@@ -1,5 +1,6 @@
 package cinema.shows.rest;
 
+import cinema.shows.dtos.EditMoviePlayingDTO;
 import cinema.shows.dtos.InputMoviePlayingDTO;
 import cinema.shows.dtos.MoviePlayingDTOFull;
 import cinema.shows.dtos.MoviePlayingDTOMin;
@@ -34,6 +35,26 @@ public class MoviePlayingRESTAPIImp implements MoviePlayingRESTAPI {
             @RequestBody InputMoviePlayingDTO inputMoviePlayingDTO) {
         MoviePlayingDTOMin moviePlayingDTOMin =
                 moviePlayingServices.addMoviePlayingInTheater(inputMoviePlayingDTO);
+        return new ResponseEntity<>(moviePlayingDTOMin, HttpStatus.OK);
+    }
+
+    @DeleteMapping("{id}")
+    public void removeMoviePlaying(@PathVariable int id) {
+        moviePlayingServices.removeMoviePlayingInTheater(id);
+    }
+
+    @PutMapping("{id}")
+    public ResponseEntity<MoviePlayingDTOMin> editMoviePlayingForTheater(
+            @RequestBody InputMoviePlayingDTO inputMoviePlayingDTO,
+            @PathVariable int id) {
+        MoviePlayingDTOMin moviePlayingDTOMin = moviePlayingServices.updateMoviePlayingInTheater(inputMoviePlayingDTO, id);
+        return new ResponseEntity<>(moviePlayingDTOMin, HttpStatus.OK);
+    }
+
+    @PutMapping
+    public ResponseEntity<MoviePlayingDTOMin> editMoviePlayingForTheater(
+            @RequestBody EditMoviePlayingDTO editMoviePlayingDTO) {
+        MoviePlayingDTOMin moviePlayingDTOMin = moviePlayingServices.updateMoviePlayingInTheater(editMoviePlayingDTO);
         return new ResponseEntity<>(moviePlayingDTOMin, HttpStatus.OK);
     }
 

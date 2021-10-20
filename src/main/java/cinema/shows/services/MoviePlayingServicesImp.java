@@ -23,7 +23,7 @@ public class MoviePlayingServicesImp implements MoviePlayingServices {
     @Autowired
     TheaterRepo theaterRepo;
     @Autowired
-    MovieRepo movieRepo;
+    MovieRepo inputMoviePlayingDTO;
 
     public MoviePlayingServicesImp(MoviePlayingRepo moviePlayingRepo) {
         this.moviePlayingRepo = moviePlayingRepo;
@@ -101,19 +101,64 @@ public class MoviePlayingServicesImp implements MoviePlayingServices {
     }
 
     @Override
-    public MoviePlayingDTOMin updateMoviePlayingInTheater(InputMoviePlayingDTO inputMoviePlayingDTO) {
-        int movieId = inputMoviePlayingDTO.getMovieId();
-        int theaterId = inputMoviePlayingDTO.getTheaterId();
-        MoviePlaying moviePlayingInDB = getMoviePlayingByMovieAndTheater(movieId,theaterId);
-        Date dateStarts = Date.valueOf(inputMoviePlayingDTO.getDateStarts());
-        Date dateEnds = Date.valueOf(inputMoviePlayingDTO.getDateEnds());
+    public MoviePlayingDTOMin updateMoviePlayingInTheater(EditMoviePlayingDTO editMoviePlayingDTO) {
+        System.out.println(editMoviePlayingDTO.getMoviePlayingId());
+        System.out.println(editMoviePlayingDTO.getDateEnds());
+        Integer moviePlayingId = editMoviePlayingDTO.getMoviePlayingId();
+        Integer movieId = editMoviePlayingDTO.getMovieId();
+        Integer theaterId = editMoviePlayingDTO.getTheaterId();
+        Date dateStarts = Date.valueOf(editMoviePlayingDTO.getDateStarts());
+        Date dateEnds = Date.valueOf(editMoviePlayingDTO.getDateEnds());
+//        MoviePlaying moviePlayingInDB = getMoviePlayingByMovieAndTheater(movieId,theaterId);
+        MoviePlaying moviePlayingInDB = getMoviePlaying(moviePlayingId);
+        System.out.println(moviePlayingInDB.getMovieId());
+        System.out.println(moviePlayingInDB.getDateStarts());
         if (dateStarts != null) {
             moviePlayingInDB.setDateStarts(dateStarts);
         }
         if (dateEnds != null) {
             moviePlayingInDB.setDateEnds(dateEnds);
         }
+        if (movieId != null) {
+            moviePlayingInDB.setMovieId(movieId);
+        }
+        if (theaterId != null) {
+            Theater theater = theaterRepo.getById(theaterId);
+            moviePlayingInDB.setTheater(theater);
+        }
         MoviePlaying moviePlayingSaved = moviePlayingRepo.save(moviePlayingInDB);
+        System.out.println(moviePlayingSaved.getDateStarts());
+        System.out.println(moviePlayingSaved.getDateEnds());
+        System.out.println(moviePlayingSaved.getId());
+        return getMoviePlayingDTOMin(moviePlayingSaved);
+    }
+
+    @Override
+    public MoviePlayingDTOMin updateMoviePlayingInTheater(InputMoviePlayingDTO inputMoviePlayingDTO, int moviePlayingId) {
+        Integer movieId = inputMoviePlayingDTO.getMovieId();
+        Integer theaterId = inputMoviePlayingDTO.getTheaterId();
+        Date dateStarts = Date.valueOf(inputMoviePlayingDTO.getDateStarts());
+        Date dateEnds = Date.valueOf(inputMoviePlayingDTO.getDateEnds());
+        MoviePlaying moviePlayingInDB = getMoviePlaying(moviePlayingId);
+        System.out.println(moviePlayingInDB.getMovieId());
+        System.out.println(moviePlayingInDB.getDateStarts());
+        if (dateStarts != null) {
+            moviePlayingInDB.setDateStarts(dateStarts);
+        }
+        if (dateEnds != null) {
+            moviePlayingInDB.setDateEnds(dateEnds);
+        }
+        if (movieId != null) {
+            moviePlayingInDB.setMovieId(movieId);
+        }
+        if (theaterId != null) {
+            Theater theater = theaterRepo.getById(theaterId);
+            moviePlayingInDB.setTheater(theater);
+        }
+        MoviePlaying moviePlayingSaved = moviePlayingRepo.save(moviePlayingInDB);
+        System.out.println(moviePlayingSaved.getDateStarts());
+        System.out.println(moviePlayingSaved.getDateEnds());
+        System.out.println(moviePlayingSaved.getId());
         return getMoviePlayingDTOMin(moviePlayingSaved);
     }
 

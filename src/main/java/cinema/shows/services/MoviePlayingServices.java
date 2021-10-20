@@ -1,5 +1,6 @@
 package cinema.shows.services;
 
+import cinema.shows.dtos.EditMoviePlayingDTO;
 import cinema.shows.dtos.InputMoviePlayingDTO;
 import cinema.shows.dtos.MoviePlayingDTOFull;
 import cinema.shows.dtos.MoviePlayingDTOMin;
@@ -13,7 +14,8 @@ public interface MoviePlayingServices {
     MoviePlaying getMoviePlayingByMovieAndTheater(Integer movieId, Integer theaterId);
 
     MoviePlayingDTOMin addMoviePlayingInTheater(InputMoviePlayingDTO inputMoviePlayingDTO);
-    MoviePlayingDTOMin updateMoviePlayingInTheater(InputMoviePlayingDTO inputMoviePlayingDTO);
+    MoviePlayingDTOMin updateMoviePlayingInTheater(InputMoviePlayingDTO inputMoviePlayingDTO, int moviePlayingId);
+    MoviePlayingDTOMin updateMoviePlayingInTheater(EditMoviePlayingDTO editMoviePlayingDTO);
     void removeMoviePlayingInTheater(Integer moviePlayingId);
 
     MoviePlayingDTOFull getMoviePlayingInTheater(Integer moviePlayingId);

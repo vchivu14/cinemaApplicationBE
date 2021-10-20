@@ -10,4 +10,5 @@ public interface ActorServices {
     List<ActorDTO> getListOfActorsToShowWithMovieRequest(Set<Actor> actors);
     Set<Actor> getSetOfActorsFromListOfActorDTOs(List<ActorDTO> actorDTOList);
     List<Actor> saveAll(List<ActorDTO> actorDTOList);
+    Actor getByFirstNameAndLastName(String firstName, String lastName);
 }

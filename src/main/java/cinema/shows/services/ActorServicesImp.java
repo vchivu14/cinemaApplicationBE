@@ -32,8 +32,11 @@ public class ActorServicesImp implements ActorServices {
     public Set<Actor> getSetOfActorsFromListOfActorDTOs(List<ActorDTO> actorDTOList) {
         Set<Actor> actorsSet = new HashSet<>();
         for (ActorDTO a: actorDTOList) {
-            Actor actor = new Actor(a);
-            actorsSet.add(actor);
+            Actor newActorSaved = getByFirstNameAndLastName(a.getFirstName(),a.getLastName());
+            if (newActorSaved == null) {
+                newActorSaved = actorRepo.save(new Actor(a));
+            }
+            actorsSet.add(newActorSaved);
         }
         return actorsSet;
     }
@@ -46,5 +49,10 @@ public class ActorServicesImp implements ActorServices {
             actorList.add(actor);
         }
         return actorRepo.saveAll(actorList);
+    }
+
+    @Override
+    public Actor getByFirstNameAndLastName(String firstName, String lastName) {
+        return actorRepo.findActorByFirstNameAndLastName(firstName,lastName);
     }
 }
