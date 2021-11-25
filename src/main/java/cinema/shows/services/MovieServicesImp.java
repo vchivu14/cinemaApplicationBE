@@ -40,6 +40,8 @@ public class MovieServicesImp implements MovieServices {
         movieDTOMin.setMinAge(movie.getMinAge());
         String category = categoryRepo.getById(movie.getCategoryId()).getName();
         movieDTOMin.setCategory(category);
+        movieDTOMin.setImage(movie.getImage());
+        movieDTOMin.setTrailer(movie.getTrailer());
         return movieDTOMin;
     }
 
@@ -54,6 +56,12 @@ public class MovieServicesImp implements MovieServices {
         movieDTOFull.setMinAge(movie.getMinAge());
         movieDTOFull.setDescription(movie.getDescription());
         movieDTOFull.setRating(movie.getRating());
+        if (movie.getImage() != null) {
+            movieDTOFull.setImage(movie.getImage());
+        }
+        if (movie.getTrailer() != null) {
+            movieDTOFull.setTrailer(movie.getTrailer());
+        }
         if (!movie.getActorSet().isEmpty()) {
             Set<Actor> actorSet = movie.getActorSet();
             movieDTOFull.setActorList(actorServices.getListOfActorsToShowWithMovieRequest(actorSet));
@@ -71,6 +79,9 @@ public class MovieServicesImp implements MovieServices {
 
     @Override
     public MovieDTOFull addMovie(InputMovieDTO inputMovieDTO) {
+        if (movieRepo.getByTitle(inputMovieDTO.getTitle()) != null) {
+            return getMovieDTOFullFromMovie(movieRepo.getByTitle(inputMovieDTO.getTitle()));
+        }
         Set<Actor> actors;
         if (inputMovieDTO.getActorList().isEmpty() || inputMovieDTO.getActorList() == null) {
             actors = new HashSet<>();
@@ -91,6 +102,8 @@ public class MovieServicesImp implements MovieServices {
         String description = movieDTO.getDescription();
         Integer categoryId = movieDTO.getCategoryId();
         List<ActorDTO> actors = movieDTO.getActorList();
+        String image = movieDTO.getImage();
+        String trailer = movieDTO.getTrailer();
         if (title != null) {
             movieInDB.setTitle(title);
         }
@@ -105,6 +118,12 @@ public class MovieServicesImp implements MovieServices {
         }
         if (categoryId != null) {
             movieInDB.setCategoryId(categoryId);
+        }
+        if (image != null) {
+            movieInDB.setImage(image);
+        }
+        if (trailer != null) {
+            movieInDB.setTrailer(trailer);
         }
         if (actors != null) {
             Set<Actor> actorSet = actorServices.getSetOfActorsFromListOfActorDTOs(actors);

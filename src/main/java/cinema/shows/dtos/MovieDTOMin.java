@@ -13,4 +13,6 @@ public class MovieDTOMin {
     private String title;
     private Short minAge;
     private String category;
+    private String trailer;
+    private String image;
 }

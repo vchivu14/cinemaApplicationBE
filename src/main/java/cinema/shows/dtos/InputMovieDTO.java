@@ -16,5 +16,7 @@ public class InputMovieDTO {
     private Short minAge;
     private String description;
     private Integer categoryId;
+    private String trailer;
+    private String image;
     private List<ActorDTO> actorList;
 }

@@ -35,7 +35,7 @@ public class Movie implements Serializable {
     private int categoryId;
 
     @Column(name = "Image")
-    private byte[] image;
+    private String image;
 
     @Column(name = "Trailer")
     private String trailer;
@@ -79,6 +79,8 @@ public class Movie implements Serializable {
         this.description = inputMovieDTO.getDescription();
         this.categoryId = inputMovieDTO.getCategoryId();
         this.actorSet = actors;
+        this.image = inputMovieDTO.getImage();
+        this.trailer = inputMovieDTO.getTrailer();
     }
 
     public Movie(int id, String title, double rating, short minAge, String description, int categoryId) {
@@ -89,5 +91,27 @@ public class Movie implements Serializable {
         this.description = description;
         this.categoryId = categoryId;
         this.actorSet = new HashSet<>();
+    }
+
+    public Movie(int id, String title, double rating, short minAge, String description, int categoryId, String image, String trailer) {
+        this.id = id;
+        this.title = title;
+        this.rating = rating;
+        this.minAge = minAge;
+        this.description = description;
+        this.categoryId = categoryId;
+        this.image = image;
+        this.trailer = trailer;
+        this.actorSet = new HashSet<>();
+    }
+
+    public Movie(String title, double rating, short minAge, String description, int categoryId, String image, String trailer) {
+        this.title = title;
+        this.rating = rating;
+        this.minAge = minAge;
+        this.description = description;
+        this.categoryId = categoryId;
+        this.image = image;
+        this.trailer = trailer;
     }
 }

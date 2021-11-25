@@ -18,5 +18,7 @@ public class MovieDTOFull {
     private String description;
     private Integer categoryId;
     private String category;
+    private String trailer;
+    private String image;
     private List<ActorDTO> actorList;
 }
