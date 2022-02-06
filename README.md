@@ -9,3 +9,6 @@ REST API solution for cinema project, third semester KEA
 
 ### REST overview:
 http://localhost:8080/swagger-ui/index.html#/
+
+### Front-End
+https://github.com/vladChivu/cinemaisus
