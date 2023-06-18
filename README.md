@@ -11,4 +11,4 @@ REST API solution for cinema project, third semester KEA
 http://localhost:8080/swagger-ui/index.html#/
 
 ### Front-End
-https://github.com/vladChivu/cinemaisus
+https://github.com/vchivu14/election-front-end
