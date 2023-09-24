@@ -5,8 +5,10 @@ import lombok.*;
 import javax.persistence.*;
 import java.util.Set;
 
-@AllArgsConstructor @NoArgsConstructor
-@Getter @Setter
+@AllArgsConstructor
+@NoArgsConstructor
+@Getter
+@Setter
 @Entity
 @Table(name = "halls")
 public class Hall {
@@ -15,10 +17,10 @@ public class Hall {
     @Column(name = "id", nullable = false)
     private int id;
 
-    @Column(name = "Tag", nullable = false, length = 45)
+    @Column(name = "tag", nullable = false, length = 255)
     private String tag;
 
-    @Column(name = "Theaters_id", nullable = false)
+    @Column(name = "theaters_id", nullable = false)
     private int theaterId;
 
     @OneToMany(mappedBy = "hall")

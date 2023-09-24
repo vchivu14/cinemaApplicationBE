@@ -7,8 +7,10 @@ import javax.persistence.*;
 import java.util.Objects;
 import java.util.Set;
 
-@AllArgsConstructor @NoArgsConstructor
-@Getter @Setter
+@AllArgsConstructor
+@NoArgsConstructor
+@Getter
+@Setter
 @Entity
 @Table(name = "actors")
 public class Actor {
@@ -17,10 +19,10 @@ public class Actor {
     @Column(name = "id", nullable = false)
     private int id;
 
-    @Column(name = "First_Name", nullable = false, length = 45)
+    @Column(name = "first_name", nullable = false, length = 255)
     private String firstName;
 
-    @Column(name = "Last_Name", nullable = false, length = 45)
+    @Column(name = "last_name", nullable = false, length = 255)
     private String lastName;
 
     @ManyToMany(mappedBy = "actorSet")
@@ -49,9 +51,12 @@ public class Actor {
 
     @Override
     public boolean equals(Object o) {
-        if (this == o) return true;
-        if (!(o instanceof Actor actor)) return false;
-        return Objects.equals(getFirstName(), actor.getFirstName()) && Objects.equals(getLastName(), actor.getLastName());
+        if (this == o)
+            return true;
+        if (!(o instanceof Actor actor))
+            return false;
+        return Objects.equals(getFirstName(), actor.getFirstName())
+                && Objects.equals(getLastName(), actor.getLastName());
     }
 
     @Override

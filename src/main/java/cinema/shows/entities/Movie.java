@@ -9,8 +9,10 @@ import java.util.Collection;
 import java.util.HashSet;
 import java.util.Set;
 
-@AllArgsConstructor @NoArgsConstructor
-@Getter @Setter
+@AllArgsConstructor
+@NoArgsConstructor
+@Getter
+@Setter
 @Entity
 @Table(name = "movies")
 public class Movie implements Serializable {
@@ -19,35 +21,31 @@ public class Movie implements Serializable {
     @Column(name = "id", nullable = false)
     private int id;
 
-    @Column(name = "Title", nullable = false, length = 45)
+    @Column(name = "title", nullable = false, length = 255)
     private String title;
 
-    @Column(name = "Rating", nullable = false)
+    @Column(name = "rating", nullable = true)
     private double rating;
 
-    @Column(name = "Min_Age", nullable = false)
+    @Column(name = "min_age", nullable = true)
     private short minAge;
 
-    @Column(name = "Description", nullable = false)
+    @Column(name = "description", nullable = true)
     private String description;
 
-    @Column(name = "Category_id", nullable = false)
+    @Column(name = "category_id", nullable = false)
     private int categoryId;
 
-    @Column(name = "Image")
+    @Column(name = "image", nullable = false, length = 255)
     private String image;
 
-    @Column(name = "Trailer")
+    @Column(name = "trailer", nullable = true, length = 255)
     private String trailer;
 
     @ManyToMany(cascade = CascadeType.PERSIST)
-    @JoinTable(name = "movie_actors",
-            joinColumns = {
-                    @JoinColumn(name = "Movies_id", referencedColumnName = "id",
-                            nullable = false, updatable = false)},
-            inverseJoinColumns = {
-                    @JoinColumn(name = "Actors_id", referencedColumnName = "id",
-                            nullable = false, updatable = false)})
+    @JoinTable(name = "movie_actors", joinColumns = {
+            @JoinColumn(name = "movies_id", referencedColumnName = "id", nullable = false, updatable = false) }, inverseJoinColumns = {
+                    @JoinColumn(name = "actors_id", referencedColumnName = "id", nullable = false, updatable = false) })
     private Set<Actor> actorSet = new HashSet<>();
 
     public void addActor(Actor actor) {
@@ -63,7 +61,7 @@ public class Movie implements Serializable {
         this.categoryId = categoryId;
     }
 
-    public Movie(String title, double rating, short minAge, String description, int categoryId, Set<Actor>actorSet) {
+    public Movie(String title, double rating, short minAge, String description, int categoryId, Set<Actor> actorSet) {
         this.title = title;
         this.rating = rating;
         this.minAge = minAge;
@@ -93,7 +91,8 @@ public class Movie implements Serializable {
         this.actorSet = new HashSet<>();
     }
 
-    public Movie(int id, String title, double rating, short minAge, String description, int categoryId, String image, String trailer) {
+    public Movie(int id, String title, double rating, short minAge, String description, int categoryId, String image,
+            String trailer) {
         this.id = id;
         this.title = title;
         this.rating = rating;
@@ -105,7 +104,8 @@ public class Movie implements Serializable {
         this.actorSet = new HashSet<>();
     }
 
-    public Movie(String title, double rating, short minAge, String description, int categoryId, String image, String trailer) {
+    public Movie(String title, double rating, short minAge, String description, int categoryId, String image,
+            String trailer) {
         this.title = title;
         this.rating = rating;
         this.minAge = minAge;

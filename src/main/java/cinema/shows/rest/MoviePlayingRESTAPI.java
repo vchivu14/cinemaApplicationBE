@@ -11,10 +11,17 @@ import java.util.List;
 
 public interface MoviePlayingRESTAPI {
     ResponseEntity<List<MoviePlayingDTOFull>> getAllMoviesPlayingForTheater(int theaterId);
+
     ResponseEntity<MoviePlayingDTOMin> addMoviePlayingForTheater(InputMoviePlayingDTO inputMoviePlayingDTO);
+
     void removeMoviePlaying(int id);
-    ResponseEntity<MoviePlayingDTOMin> editMoviePlayingForTheater(InputMoviePlayingDTO inputMoviePlayingDTO, int moviePlayingId);
+
+    ResponseEntity<MoviePlayingDTOMin> editMoviePlayingForTheater(InputMoviePlayingDTO inputMoviePlayingDTO,
+            int moviePlayingId);
+
     ResponseEntity<MoviePlayingDTOMin> editMoviePlayingForTheater(EditMoviePlayingDTO editMoviePlayingDTO);
+
     ResponseEntity<List<MoviePlayingDTOFull>> getAllMoviesPlayingForDate(String date);
+
     ResponseEntity<List<MoviePlayingDTOFull>> getAllMoviesPlayingForDates(String dateStarts, String dateEnds);
 }

@@ -8,8 +8,10 @@ import java.sql.Time;
 import java.util.Objects;
 import java.util.Set;
 
-@AllArgsConstructor @NoArgsConstructor
-@Getter @Setter
+@AllArgsConstructor
+@NoArgsConstructor
+@Getter
+@Setter
 @Entity
 @Table(name = "shows")
 public class Show {
@@ -43,9 +45,12 @@ public class Show {
 
     @Override
     public boolean equals(Object o) {
-        if (this == o) return true;
-        if (!(o instanceof Show show)) return false;
-        return getHallId() == show.getHallId() && Objects.equals(getDate(), show.getDate()) && Objects.equals(getTime(), show.getTime());
+        if (this == o)
+            return true;
+        if (!(o instanceof Show show))
+            return false;
+        return getHallId() == show.getHallId() && Objects.equals(getDate(), show.getDate())
+                && Objects.equals(getTime(), show.getTime());
     }
 
     @Override

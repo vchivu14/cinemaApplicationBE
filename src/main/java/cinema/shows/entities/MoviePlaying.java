@@ -7,8 +7,10 @@ import java.sql.Date;
 import java.util.List;
 import java.util.Objects;
 
-@AllArgsConstructor @NoArgsConstructor
-@Getter @Setter
+@AllArgsConstructor
+@NoArgsConstructor
+@Getter
+@Setter
 @Entity
 @Table(name = "movies_playing")
 public class MoviePlaying {
@@ -50,9 +52,12 @@ public class MoviePlaying {
 
     @Override
     public boolean equals(Object o) {
-        if (this == o) return true;
-        if (!(o instanceof MoviePlaying that)) return false;
-        return getMovieId() == that.getMovieId() && Objects.equals(getDateStarts(), that.getDateStarts()) && Objects.equals(getDateEnds(), that.getDateEnds());
+        if (this == o)
+            return true;
+        if (!(o instanceof MoviePlaying that))
+            return false;
+        return getMovieId() == that.getMovieId() && Objects.equals(getDateStarts(), that.getDateStarts())
+                && Objects.equals(getDateEnds(), that.getDateEnds());
     }
 
     @Override

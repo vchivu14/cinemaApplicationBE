@@ -6,8 +6,10 @@ import javax.persistence.*;
 import java.util.Collection;
 import java.util.Objects;
 
-@AllArgsConstructor @NoArgsConstructor
-@Getter @Setter
+@AllArgsConstructor
+@NoArgsConstructor
+@Getter
+@Setter
 @Entity
 @Table(name = "categories")
 public class Category {
@@ -16,7 +18,7 @@ public class Category {
     @Column(name = "id", nullable = false)
     private int id;
 
-    @Column(name = "Name", nullable = false, length = 45)
+    @Column(name = "name", nullable = false, length = 255)
     private String name;
 
     public Category(String name) {
