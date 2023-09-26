@@ -5,7 +5,7 @@
 <h5>Please read the Project and Presentation files for more details</h5>
  
 # Overview:
-REST API solution for browsing movie titles and booking a ticket.
+REST API solution for managing movies playing in a cinema as well as ticket booking.
 
 # Requirements:
 <ul>
@@ -18,7 +18,7 @@ REST API solution for browsing movie titles and booking a ticket.
 <ul>
  <li> install all of the above </li>
  <li> create a db schema called cinema </li> 
- <li> in the application-dev.properties file replace the <user> and <password> with your MySQL credentials </li> 
+ <li> in the application-dev.properties file replace the '<user>' and '<password>' with your MySQL credentials </li> 
  <li> run the command: mvn clean install  </li>
  <li> run the command: mvn spring-boot:run </li> 
 </ul>
