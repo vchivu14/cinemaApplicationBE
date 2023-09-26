@@ -1,4 +1,4 @@
-# Cinema business chain #
+# Cinema business franchise #
 
 <h3>This web application was an assignment at KEA Copenhagen, Computer Science</h3> 
 
